@@ -11,11 +11,24 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import static android.graphics.Color.RED;
 
@@ -24,26 +37,29 @@ public class Notification extends AppCompatActivity {
 
     public static final String NOTIFICATION_CHANNEL_ID = "am the notification channel id";
     public static final String NOTIFICATION_CHANNEL_NAME = "SimpleCalc";
-    private static final int NOTIFICATION_ID = 0;
+    public static final int NOTIFICATION_ID = 0;
     private static final String ACTION_UPDATE_NOTIFICATION =
             "com.example.android.SimpleCalc.ACTION_UPDATE_NOTIFICATION";
 
     private NotificationManager mNotifyManager;
+
     private Button button_notify;
     private Button button_cancel;
     private Button button_update;
 
     // Initialize the broadcast receiver with its constructor.
     private NotificationReceiver mReceiver = new NotificationReceiver();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
 
         // Register the broadcast receiver here
-        registerReceiver(mReceiver,new IntentFilter(ACTION_UPDATE_NOTIFICATION));
+        registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE_NOTIFICATION));
 
-        button_notify = findViewById(R.id.notify);
+
+        button_notify = findViewById(R.id.notify_btn);
         button_notify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,23 +69,20 @@ public class Notification extends AppCompatActivity {
         button_update = findViewById(R.id.update);
         createNotificationChannel();
 
-        button_update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Update the notification
-                updateNotification();
-            }
+        button_update.setOnClickListener(view -> {
+            //Update the notification
+            updateNotification();
         });
 
         button_cancel = findViewById(R.id.cancel);
-        button_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Cancel the notification
-                cancelNotification();
-            }
+        button_cancel.setOnClickListener(view -> {
+            //Cancel the notification
+            cancelNotification();
         });
         setNotificationButtonState(true, false, false);
+
+
+
     }
 
     public void updateNotification() {
@@ -77,7 +90,7 @@ public class Notification extends AppCompatActivity {
         setNotificationButtonState(false, false, true);
         Bitmap notificationImg = BitmapFactory.decodeResource(getResources(), R.drawable.mascot_1);
 
-        NotificationCompat.Builder notificationBuilder = getNotificationBuilder();
+        NotificationCompat.Builder notificationBuilder = NotificationHelper.getNotificationBuilder(Notification.this,"Update","Update from update function");
         notificationBuilder.setStyle(new NotificationCompat.BigPictureStyle()
                 .bigPicture(notificationImg)
                 .setBigContentTitle("Notification update"));
@@ -115,31 +128,16 @@ public class Notification extends AppCompatActivity {
     private void sendNotification() {
         Log.d(TAG, "sendNotification: ");
         Intent updateIntent = new Intent(ACTION_UPDATE_NOTIFICATION);
-        PendingIntent broadcastIntent = PendingIntent.getBroadcast(this,NOTIFICATION_ID,updateIntent,PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent broadcastIntent = PendingIntent.getBroadcast(this, NOTIFICATION_ID, updateIntent, PendingIntent.FLAG_ONE_SHOT);
 
         setNotificationButtonState(false, true, true);
-        NotificationCompat.Builder notificationBuilder = getNotificationBuilder();
-        notificationBuilder.addAction(R.drawable.ic_update,"UPDATE NOTIFICATION",broadcastIntent);
+        NotificationCompat.Builder notificationBuilder = NotificationHelper.getNotificationBuilder(Notification.this,"Notify","method call from the notify method");
+        notificationBuilder.addAction(R.drawable.ic_update, "UPDATE NOTIFICATION", broadcastIntent);
 
         mNotifyManager.notify(NOTIFICATION_ID, notificationBuilder.build());
 
     }
 
-    private NotificationCompat.Builder getNotificationBuilder() {
-        Log.d(TAG, "getNotificationBuilder: ");
-        Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        return new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                .setContentTitle("SimpleCalc")
-                .setContentText("Application feedback")
-                .setSmallIcon(R.drawable.ic_notification_24dp)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setDefaults(NotificationCompat.DEFAULT_ALL);
-
-    }
 //    @Override
 //    protected void onDestroy() {
 //        unregisterReceiver(mReceiver);

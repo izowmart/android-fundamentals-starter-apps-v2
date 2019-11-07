@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "370876055279",
+    "firebase_url": "https://simplecalc-b3a27.firebaseio.com",
+    "project_id": "simplecalc-b3a27",
+    "storage_bucket": "simplecalc-b3a27.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:370876055279:android:5c0dcddba6c08e3117a51a",
+        "android_client_info": {
+          "package_name": "com.example.android.SimpleCalc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "370876055279-vkpl6hejhqjpomf6hbese7ajfc28iu8h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android.SimpleCalc",
+            "certificate_hash": "aebd10990e6c3f79b9fc18079713bfe17e520ad6"
+          }
+        },
+        {
+          "client_id": "370876055279-ipqqtg94ac6mko3i4dped2runtd0134v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7MP05AKSUxx-1w9DmtdHPiO7qHr_escI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "370876055279-ipqqtg94ac6mko3i4dped2runtd0134v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
