@@ -30,7 +30,7 @@ public class ProfileActivity extends AppCompatActivity {
         currentUser = mAuth.getCurrentUser();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("users");
-        //get FCM token
+        //get FCM token so that you can be able to send updates to specific individuals
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
