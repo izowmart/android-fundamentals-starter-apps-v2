@@ -1,4 +1,4 @@
-package com.example.android.SimpleCalc;
+package com.example.android.SimpleCalc.alarmManager;
 
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
@@ -13,6 +13,8 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.android.SimpleCalc.R;
 
 public class StandUp extends AppCompatActivity {
     private static final String TAG = "<< StandUp >>";

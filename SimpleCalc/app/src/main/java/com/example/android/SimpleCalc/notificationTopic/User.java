@@ -1,4 +1,4 @@
-package com.example.android.SimpleCalc;
+package com.example.android.SimpleCalc.notificationTopic;
 
 public class User {
 

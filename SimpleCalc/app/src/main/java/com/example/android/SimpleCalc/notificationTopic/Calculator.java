@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.SimpleCalc;
+package com.example.android.SimpleCalc.notificationTopic;
 
 /**
  * Utility class for SimpleCalc to perform the actual calculations.

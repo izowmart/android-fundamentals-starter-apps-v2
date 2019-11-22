@@ -18,6 +18,8 @@ package com.example.android.SimpleCalc;
 
 import android.test.suitebuilder.annotation.SmallTest;
 
+import com.example.android.SimpleCalc.notificationTopic.Calculator;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
